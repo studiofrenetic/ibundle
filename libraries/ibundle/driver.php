@@ -62,6 +62,28 @@ abstract class Driver {
 	protected abstract function save();
 
 	/**
+	 * Get iBundle meta data
+	 *
+	 * @return array
+	 */
+	public function meta_data($bundle)
+	{
+		// Path to the iBundle JSON file
+		$meta_data = ibundle_config('path').$bundle.DIRECTORY_SEPARATOR.'ibundle.json';
+
+		// You need to chmod the ibundle.json file.
+		if ( ! Laravel_File::exists($meta_data) or ! is_readable($meta_data)) return false;
+
+		// Get meta data proper
+		$meta_data = (array) json_decode(Laravel_File::get($meta_data));
+
+		// Invalid meta data. grr.
+		if ( ! $this->valid_meta_data($meta_data)) return false;
+
+		return $meta_data;
+	}
+
+	/**
 	 * Activate a valid iBundle.
 	 *
 	 * @param  string  $bundle
@@ -76,17 +98,7 @@ abstract class Driver {
 		if ( ! array_key_exists($bundle, $this->available()) or array_key_exists($bundle, $bundles))
 			return false;
 
-		// Path to the iBundle JSON file
-		$meta_data = ibundle_config('path').$bundle.DIRECTORY_SEPARATOR.'ibundle.json';
-
-		// You need to chmod the ibundle.json file.
-		if ( ! Laravel_File::exists($meta_data) or ! is_readable($meta_data)) return false;
-
-		// Get meta data proper
-		$meta_data = (array) json_decode(Laravel_File::get($meta_data));
-
-		// Invalid meta data. grr.
-		if ( ! $this->valid_meta_data($meta_data)) return false;
+		$meta_data = $this->meta_data($bundle);
 
 		// Set as activated, along with meta data
 		$this->activated[$bundle] = $meta_data;
@@ -159,18 +171,21 @@ abstract class Driver {
 			// Available iBundles
 			$available = array();
 
+			// Cannot use $this in closure as lexical variable ( < PHP 5.4 )
+			$this_var = $this;
+
 			// Loop through all the files found. We are looking for folders with an
 			// ibundle.json file
 			array_map(
-				function($path) use (&$available)
+				function($path) use (&$available, $this_var)
 				{
 					if(strpos($path, "ibundle.json") !== false)
 					{
 						// directory name
 						$directory_name = pathinfo(dirname($path), PATHINFO_BASENAME);
 
-						// Add path to list of available iBundles
-						$available[$directory_name] = dirname($path);
+						// Add path and icon to list of available iBundles
+						$available[$directory_name] = $this_var->meta_data($directory_name);
 					}
 				},
 				$bundles
@@ -249,7 +264,7 @@ abstract class Driver {
 		$meta_data = (array) $meta_data;
 
 		// Required keys
-		$expected = array('auto', 'handles', 'location');
+		$expected = array('auto', 'handles', 'location', 'icon');
 
 		// Is a valid json file
 		$is_valid = true;

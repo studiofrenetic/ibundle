@@ -1,1 +1,1 @@
-{"auto":@auto,"handles":"@handles","location":@path,"icon":"@icon","admin_method":"@admin_method"}
+{"auto":@auto,"handles":"@handles","location":@path,"icon":"@icon","admin_method":"@admin_method", "name":@name}

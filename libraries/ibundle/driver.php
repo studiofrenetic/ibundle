@@ -264,7 +264,7 @@ abstract class Driver {
 		$meta_data = (array) $meta_data;
 
 		// Required keys
-		$expected = array('auto', 'handles', 'location', 'icon', 'admin_method');
+		$expected = array('auto', 'handles', 'location', 'icon', 'admin_method', 'name');
 
 		// Is a valid json file
 		$is_valid = true;

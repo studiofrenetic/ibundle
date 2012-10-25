@@ -15,7 +15,7 @@ return array(
 	/**
 	 * File name of the cache file, used by iBundle file driver.
 	 */
-	'file'	=> IBUNDLE_ROOT.'storage/ibundle_activated.php.serialized',
+	'file'	=> path('storage').'ibundle_activated.php.serialized',
 
 	/**
 	 * Move or Copy from bundles folder when tracking a bundle.

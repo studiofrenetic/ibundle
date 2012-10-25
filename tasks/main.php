@@ -154,6 +154,7 @@ class Main {
 		$bundle = array_get($arguments, 0);
 		$handles = array_get($arguments, 1, 'null');
 		$icon = array_get($arguments, 2, 'null');
+		$admin_method = array_get($arguments, 3, 'index');
 
 		if ($bundle === false or empty($bundle))
 		{
@@ -186,8 +187,8 @@ class Main {
 		{
 			// Customize ibundle.json meta data
 			$meta_data = str_replace(
-				array('@auto', '@path', '@handles', '@icon'),
-				array('true', '"path: '.addslashes($ibundle_dir).'"', $handles, $icon),
+				array('@auto', '@path', '@handles', '@icon', '@admin_method'),
+				array('true', '"path: '.addslashes($ibundle_dir).'"', $handles, $icon, $admin_method),
 				File::get(IBUNDLE_ROOT.'storage/ibundle_template.json')
 			);
 

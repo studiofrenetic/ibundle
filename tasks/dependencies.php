@@ -20,6 +20,12 @@ IoC::register('task: ibundle::migrate', function() use ($dependency)
     return new Ibundle_Base_Task($dependency, 'migrate');
 });
 
+// Rollback migrate
+IoC::register('task: ibundle::migrate_rollback', function() use ($dependency)
+{
+    return new Ibundle_Base_Task($dependency, 'migrate_rollback');
+});
+
 // Publish
 IoC::register('task: ibundle::publish', function() use ($dependency)
 {

@@ -43,29 +43,6 @@ class Main {
 	}
 
 	/**
-	 * Rollback migration for ibundles.
-	 *
-	 * <code>
-	 * 	$ php artisan ibundle::migrate bundle
-	 * </code>
-	 *
-	 * @param  array  $arguments
-	 * @return  null
-	 */
-	public function migrate_rollback($arguments = array())
-	{
-		$bundle = array_get($arguments, 0);
-
-		if ($bundle === false or empty($bundle))
-		{
-			Ibundle_Base_Task::error('Invalid iBundle name.');
-		}
-
-		// Laravel do your thing.
-		Command::run(array('migrate:rollback', $bundle));
-	}
-
-	/**
 	 * Migrate an installed bundle.
 	 *
 	 * <code>
@@ -86,6 +63,55 @@ class Main {
 
 		// Laravel do your thing.
 		Command::run(array('migrate', $bundle));
+	}
+
+	/**
+	 * Rollback migration for bundle.
+	 *
+	 * <code>
+	 * 	$ php artisan ibundle::migrate_rollback bundle
+	 * </code>
+	 *
+	 * @param  array  $arguments
+	 * @return  null
+	 */
+	public function migrate_rollback($arguments = array())
+	{
+		$bundle = array_get($arguments, 0);
+
+		if ($bundle === false or empty($bundle))
+		{
+			Ibundle_Base_Task::error('Invalid iBundle name.');
+		}
+
+		// Laravel do your thing.
+		Command::run(array('migrate:rollback', $bundle));
+	}
+
+	/**
+	 * Create migration for bundle.
+	 *
+	 * <code>
+	 * 	$ php artisan ibundle::migrate_create bundle::create_table
+	 * </code>
+	 *
+	 * @param  array  $arguments
+	 * @return  null
+	 */
+	public function migrate_make($arguments = array())
+	{
+		$bundle = array_get($arguments, 0);
+
+		if ($bundle === false or empty($bundle))
+		{
+			Ibundle_Base_Task::error('Invalid iBundle name.');
+		}
+
+		list($name, $migration) = \Bundle::parse($bundle);
+		\Bundle::register($name);
+
+		// Laravel do your thing.
+		Command::run(array('migrate:make', $bundle));
 	}
 
 	/**

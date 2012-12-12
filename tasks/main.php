@@ -77,15 +77,8 @@ class Main {
 	 */
 	public function migrate_rollback($arguments = array())
 	{
-		$bundle = array_get($arguments, 0);
-
-		if ($bundle === false or empty($bundle))
-		{
-			Ibundle_Base_Task::error('Invalid iBundle name.');
-		}
-
 		// Laravel do your thing.
-		Command::run(array('migrate:rollback', $bundle));
+		Command::run(array('migrate:rollback'));
 	}
 
 	/**

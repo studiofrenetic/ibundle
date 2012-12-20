@@ -1,0 +1,14 @@
+{
+    "name": "frenesie/bundles/ibundle",
+    "description": "iBundle is an improved Bundles manager for the Laravel PHP framework.",
+    "authors": [
+        {
+            "name": "Neo Ighodaro",
+            "homepage": "http://github.com/CreativityKills/iBundle"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "minimum-stability": "dev"
+}

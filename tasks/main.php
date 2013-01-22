@@ -108,6 +108,29 @@ class Main {
 	}
 
 	/**
+	 * Create tasks
+	 *
+	 * <code>
+	 * 	$ php artisan ibundle::migrate bundle
+	 * </code>
+	 *
+	 * @param  array  $arguments
+	 * @return  null
+	 */
+	public function task($arguments = array())
+	{
+		$bundle = array_get($arguments, 0);
+
+		if ($bundle === false or empty($bundle))
+		{
+			Ibundle_Base_Task::error('Invalid iBundle name.');
+		}
+
+		// Laravel do your thing.
+		Command::run($arguments);
+	}
+
+	/**
 	 * Publish an installed bundle.
 	 *
 	 * <code>

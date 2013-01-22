@@ -32,6 +32,12 @@ IoC::register('task: ibundle::migrate_make', function() use ($dependency)
     return new Ibundle_Base_Task($dependency, 'migrate_make');
 });
 
+// Task
+IoC::register('task: ibundle::task', function() use ($dependency)
+{
+    return new Ibundle_Base_Task($dependency, 'task');
+});
+
 // Publish
 IoC::register('task: ibundle::publish', function() use ($dependency)
 {
